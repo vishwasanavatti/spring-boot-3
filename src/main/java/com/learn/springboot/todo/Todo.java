@@ -2,6 +2,7 @@ package com.learn.springboot.todo;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Size;
 
 public class Todo {
@@ -13,6 +14,7 @@ public class Todo {
 	@Size(min=10, message="Enter atleast 10 chars")
 	private String description;
 
+	@FutureOrPresent(message = "Please enter future date")
 	private LocalDate targetDate;
 
 	private boolean isComplete;
