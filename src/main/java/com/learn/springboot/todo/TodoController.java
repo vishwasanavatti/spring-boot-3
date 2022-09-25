@@ -1,6 +1,5 @@
 package com.learn.springboot.todo;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.learn.springboot.util.Util;
 
 import jakarta.validation.Valid;
 
@@ -23,7 +24,8 @@ public class TodoController {
 
 	@RequestMapping("list-todos")
 	public String listAllTodos(ModelMap model) {
-		List<Todo> todos = todoService.getTodos("");
+		String username = Util.getLoggedInUsername();
+		List<Todo> todos = todoService.getTodos(username);
 
 		model.put("todos", todos);
 
@@ -32,7 +34,7 @@ public class TodoController {
 
 	@RequestMapping(value = "add-todo", method = RequestMethod.GET)
 	public String showTodo(ModelMap model) {
-		Todo todo = new Todo(0, model.get("name").toString(), "", null, false);
+		Todo todo = new Todo(0, Util.getLoggedInUsername(), "", null, false);
 		model.put("todo", todo);
 		return "todo";
 	}
@@ -43,7 +45,7 @@ public class TodoController {
 			return "todo";
 		}
 
-		todoService.addTodo(model.get("name").toString(), todo.getDescription(), todo.getTargetDate());
+		todoService.addTodo(Util.getLoggedInUsername(), todo.getDescription(), todo.getTargetDate());
 		return "redirect:list-todos";
 	}
 
