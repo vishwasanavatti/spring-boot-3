@@ -27,5 +27,18 @@ public class TodoService {
 		Todo todo = new Todo(++todosCount, username, description, targetDate, false);
 		todos.add(todo);
 	}
+	
+	public void deleteTodo(int id) {
+		todos.removeIf(t -> t.getId() == id);
+	}
+	
+	public Todo getTodo(int id) {
+		return todos.stream().filter(t -> t.getId() == id).toList().get(0);
+	}
+
+	public void updateTodo(Todo todo) {
+		Todo updateTodo = getTodo(todo.getId());
+		updateTodo.setDescription(todo.getDescription());
+	}
 
 }
