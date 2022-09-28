@@ -57,8 +57,10 @@ public class TodoController {
 
 	@RequestMapping(value = "update-todo", method = RequestMethod.GET)
 	public String updateTodo(@RequestParam int id, ModelMap model) {
-		Todo todo = todoService.getTodo(id);
-		if (todo == null) {
+		Todo todo = null;
+		try {
+			todo = todoService.getTodo(id);
+		} catch(Exception e) {
 			return "redirect:list-todos";
 		}
 
