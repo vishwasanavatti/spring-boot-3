@@ -58,7 +58,7 @@ public class TodoControllerJpa {
 
 	@RequestMapping(value = "update-todo", method = RequestMethod.GET)
 	public String updateTodo(@RequestParam int id, ModelMap model) {
-		Todo todo = todoRepository.findById(id).get();
+		Todo todo = todoRepository.findById(id).orElse(null);
 		if (todo == null) {
 			return "redirect:list-todos";
 		}
